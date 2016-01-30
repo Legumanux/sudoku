@@ -28,7 +28,7 @@ class Solver :
             hasChanged = self.iterate()
             self.iteration += 1
             if not hasChanged:
-                print(str(self.iteration) + "ITERATIONS")
+                print(str(self.iteration) + " ITERATIONS")
                 return self.isSolved()
 
 
@@ -36,9 +36,14 @@ class Solver :
     def iterate(self):
         hasChanged = False
         for k in range(self.sudoku.count):
-            hasChanged = hasChanged or self.rows[k].iterate()
-            hasChanged = hasChanged or self.cols[k].iterate()
-            hasChanged = hasChanged or self.squares[k].iterate()
+            if self.rows[k].iterate():
+                hasChanged = True
+            if self.cols[k].iterate():
+                hasChanged = True
+            if self.squares[k].iterate():
+                hasChanged = True
+        if not hasChanged:
+            print("test")
         return hasChanged
 
     def isSolved(self):

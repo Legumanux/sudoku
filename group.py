@@ -23,14 +23,31 @@ class Group:
                     if lockedValues.count(value) > 0:
                         block.remove(value)
                         hasChanged = True
-
+                        """
                         if not self.isValid():
                             print("PAS VALIDE")
                         else:
                             print("OK")
+                        """
                         if block.isSolved():
                             lockedValues.append(block.values[0])
-        self.isSolved = len(lockedValues) == self.count
+        if len(lockedValues) == self.count:
+            self.isSolved = True
+        # on va maintenant placer les chiffres non places
+        if not self.isSolved:
+            for val in range(1, self.count+1):
+                if lockedValues.count(val) == 0:
+                    # on compte le nombre de cases non solved qui peuvent contenir
+                    matches = []
+                    for k in range(self.count):
+                        if self.values[k].values.count(val) == 1:
+                            matches.append(self.values[k])
+                    if len(matches) == 1:
+                        matches[0].forceValue(val)
+                        lockedValues.append(val)
+                        hasChanged = True
+
+
         return hasChanged
 
     def isValid(self):

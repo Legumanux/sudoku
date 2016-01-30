@@ -29,6 +29,14 @@ class Sudoku :
                 else:
                     self.matrix[x][y].forceValue(tab[x+self.count*y])
 
+    def printIncertitudes(self):
+        res = ""
+        for y in range(self.count):
+            for x in range(self.count):
+                res += str(len(self.matrix[x][y].values))
+            res += '\n'
+        print(res)
+
 
 
 """
